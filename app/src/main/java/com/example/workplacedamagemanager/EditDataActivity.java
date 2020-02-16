@@ -119,6 +119,7 @@ public class EditDataActivity extends AppCompatActivity {
         DMtxt.setText(selectedDateM);
         Dtxt.setText(selectedDescription);
         Statustxt.setText(selectedStatus);
+        Statustxt.setEnabled(false);
 
         Bitmap bitmap = BitmapFactory.decodeByteArray(selectedImage,0,selectedImage.length);
         bitmap = Bitmap.createScaledBitmap(bitmap, 400, 400, true);

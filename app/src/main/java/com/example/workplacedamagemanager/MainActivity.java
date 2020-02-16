@@ -21,10 +21,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.app.AlertDialog;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,21 +72,27 @@ public class MainActivity extends AppCompatActivity {
         final ArrayList<Integer> ides = ids;
         Log.d("SHABBAT FREEDOM" , ids.toString());
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbzX0lhVQBZnfQURdQllg2RMlFMuBt2DRjUCq3Gp7QmlXsIvM1Ho/exec",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbzX0lhVQBZnfQURdQllg2RMlFMuBt2DRjUCq3Gp7QmlXsIvM1Ho/exec",
 
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        String[] idees = response.split(", ");
+                        String[] idees = response.split(",");
                         Log.d("response gotten","oof");
-                        Log.d("RIP CODE", idees.toString());
-                        for(int i=0; i< ides.size(); i++)
-                        {
-                            while(data.moveToNext()){
-                                //get the value from the database in column 1
-                                //then add it to the ArrayList
-                                if (data.getInt(4)!=0)
-                                    myDb.updateName(data.getString(1),data.getInt(0),data.getString(1),data.getString(2),data.getString(3),data.getString(4), idees[i],data.getString(6),data.getBlob(7));
+                        Log.d("RIP CODE", ""+response);
+                        for(int i=0; i< ides.size(); i++) {
+                            Log.d("emp",""+data.moveToFirst());
+                            if (data.moveToFirst()) {
+                                if (data.getInt(4) == ides.get(i))
+                                    myDb.updateName(data.getString(1), data.getInt(0), data.getString(1), data.getString(2), data.getString(3), data.getString(4), idees[i], data.getString(6), data.getBlob(7));
+                                while (data.moveToNext()) {
+                                    //get the value from the database in column 1
+                                    //then add it to the ArrayList
+                                    Log.d("First", "move");
+                                    Log.d("data", "" + data.getInt(4));
+                                    if (data.getInt(4) == ides.get(i))
+                                        myDb.updateName(data.getString(1), data.getInt(0), data.getString(1), data.getString(2), data.getString(3), data.getString(4), idees[i], data.getString(6), data.getBlob(7));
+                                }
                             }
                         }
                     }
@@ -99,11 +109,21 @@ public class MainActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 Log.d("sending",ides.toString());
                 //here we pass params
+                params.put("action","status");
                 params.put("ids", ides.toString());
 
                 return params;
             }
         };
+        int socketTimeOut = 5000;// u can change this .. here it is 50 seconds
+
+        RetryPolicy retryPolicy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(retryPolicy);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        queue.add(stringRequest);
+
         refresh = (Button)findViewById(R.id.refresh);
         se = (Button)findViewById(R.id.se);
 
