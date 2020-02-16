@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/databaseback"
     tools:context=".MainActivity">
 
 
@@ -30,40 +31,14 @@
 
         <ListView
             android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="261dp" />
+            android:layout_width="280dp"
+            android:layout_height="210dp"
+            android:layout_marginTop="140dp"
+            android:layout_marginStart="50dp" />
 
 
 
     </LinearLayout>
-
-    <TextView
-
-        android:layout_width="1000dp"
-        android:layout_height="20dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="300dp"
-        android:layout_marginEnd="-4dp"
-        android:textColor="#000000"
-        android:text="Your Auto Generated Reports:" />
-
-    <TextView
-
-        android:layout_width="1000dp"
-        android:layout_height="20dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="-4dp"
-        android:textColor="#000000"
-        android:text="Your Manually Submitted Reports:" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -79,8 +54,10 @@
 
         <ListView
             android:id="@+id/listView2"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_width="280dp"
+            android:layout_height="210dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginStart="50dp"
             />
     </LinearLayout>
 

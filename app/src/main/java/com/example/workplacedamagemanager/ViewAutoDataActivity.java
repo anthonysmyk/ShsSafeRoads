@@ -58,6 +58,7 @@ public class ViewAutoDataActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_auto);
+        getSupportActionBar().hide();
         btnDelete = (Button) findViewById(R.id.btnDelete);
         btnSend = findViewById(R.id.btnSend);
         Dtxt = (TextView) findViewById(R.id.textDate);

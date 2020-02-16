@@ -84,6 +84,7 @@ public class EditDataActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_data_layout);
+        getSupportActionBar().hide();
         btnSave = (Button) findViewById(R.id.btnSave);
         btnDelete = (Button) findViewById(R.id.btnDelete);
         btnImage = findViewById(R.id.button2);
@@ -355,7 +356,7 @@ public class EditDataActivity extends AppCompatActivity {
 
     public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 35, outputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 25, outputStream);
         return outputStream.toByteArray();
     }
 
