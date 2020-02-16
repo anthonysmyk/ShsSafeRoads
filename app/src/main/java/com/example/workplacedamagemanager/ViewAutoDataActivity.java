@@ -108,6 +108,7 @@ public class ViewAutoDataActivity extends AppCompatActivity {
 
     }
     private void addItemToSheet() {
+
         final ProgressDialog loading = ProgressDialog.show(this,"Adding Item","Please wait");
         final String  GPS = (Gtxt.getText().toString());
         final  String date = (Dtxt.getText().toString());
@@ -116,8 +117,9 @@ public class ViewAutoDataActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
 
+
                         loading.dismiss();
-                        Toast.makeText(ViewAutoDataActivity.this,response,Toast.LENGTH_LONG).show();
+                        Toast.makeText(ViewAutoDataActivity.this,"Success",Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                         startActivity(intent);
 

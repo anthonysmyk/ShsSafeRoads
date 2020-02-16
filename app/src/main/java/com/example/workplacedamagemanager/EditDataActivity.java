@@ -51,7 +51,7 @@ public class EditDataActivity extends AppCompatActivity {
     private static final String TAG = "EditDataActivity";
 
     private Button btnSave,btnDelete,btnImage,btnSend;
-    private EditText Ntxt, Dtxt, DMtxt, Stxt;
+    private EditText Ntxt, Dtxt, DMtxt, Stxt, Statustxt;
     private ImageView Itxt;
 
    DatabaseHelper mDatabaseHelper;
@@ -66,6 +66,7 @@ public class EditDataActivity extends AppCompatActivity {
     private String selectedDateM;
     private String selectedSeverity;
     private String selectedDescription;
+    private String selectedStatus;
     private byte[] selectedImage;
 
     private boolean hasImage(@NonNull ImageView view) {
@@ -92,6 +93,7 @@ public class EditDataActivity extends AppCompatActivity {
         Itxt = (ImageView) findViewById(R.id.imageView);
 
         DMtxt = (EditText) findViewById(R.id.editText_dM);
+        Statustxt = (EditText) findViewById(R.id.editable_item2);
 
 
         Stxt = (EditText) findViewById(R.id.editText_s);
@@ -109,12 +111,14 @@ public class EditDataActivity extends AppCompatActivity {
         selectedDescription = receivedIntent.getStringExtra("description");
         selectedDateM = receivedIntent.getStringExtra("datem");
         selectedSeverity = receivedIntent.getStringExtra("severity");
+        selectedStatus = receivedIntent.getStringExtra("datey");
         selectedImage = receivedIntent.getByteArrayExtra("image");
         //set the text to show the current selected name
         Ntxt.setText(selectedName);
         Stxt.setText((selectedSeverity));
         DMtxt.setText(selectedDateM);
         Dtxt.setText(selectedDescription);
+        Statustxt.setText(selectedStatus);
 
         Bitmap bitmap = BitmapFactory.decodeByteArray(selectedImage,0,selectedImage.length);
         bitmap = Bitmap.createScaledBitmap(bitmap, 400, 400, true);
@@ -187,11 +191,18 @@ public class EditDataActivity extends AppCompatActivity {
 
     }
     private void addItemToSheet() {
+        Intent receivedIntent = getIntent();
+        mDatabaseHelper = new DatabaseHelper(this);
+        selectedID = receivedIntent.getIntExtra("id",-1); //NOTE: -1 is just the default value
+
+        //now get the name we passed as an extra
+        selectedName = receivedIntent.getStringExtra("name");
         final ProgressDialog loading = ProgressDialog.show(this,"Adding Item","Please wait");
        final String name = Ntxt.getText().toString();
         final String description = Dtxt.getText().toString();
         final String severity = Stxt.getText().toString();
         final String dateM = DMtxt.getText().toString();
+        selectedImage = receivedIntent.getByteArrayExtra("image");
         final byte[] img = selectedImage;
         final String encodedImage = Base64.encodeToString(img, Base64.DEFAULT);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbzX0lhVQBZnfQURdQllg2RMlFMuBt2DRjUCq3Gp7QmlXsIvM1Ho/exec",
@@ -200,7 +211,8 @@ public class EditDataActivity extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         loading.dismiss();
-                        Toast.makeText(EditDataActivity.this,response,Toast.LENGTH_LONG).show();
+                        Toast.makeText(EditDataActivity.this,"Success",Toast.LENGTH_LONG).show();
+                        mDatabaseHelper.updateName(name,selectedID,selectedName, description, dateM, response, "", severity,selectedImage);
                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                         startActivity(intent);
 

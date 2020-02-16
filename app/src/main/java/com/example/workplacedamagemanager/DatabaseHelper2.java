@@ -12,19 +12,20 @@ public class DatabaseHelper2 extends SQLiteOpenHelper {
     public static final String col_1 = "ID";
     public static final String col_2 = "DATE";
     public static final String col_3 = "GPS";
+    public static final String col_4 = "GLOBALID";
 
     private static final String TAG = "Message:";
 
 
 
     public DatabaseHelper2(Context context) {
-        super(context, DATABASE_NAME,null,5);
+        super(context, DATABASE_NAME,null,6);
         SQLiteDatabase db = this.getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-    db.execSQL("create table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, DATE TEXT, GPS TEXT)");
+    db.execSQL("create table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, DATE TEXT, GPS TEXT, GLOBALID TEXT)");
     }
 
     @Override
@@ -38,6 +39,7 @@ public class DatabaseHelper2 extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(col_2, date);
         contentValues.put(col_3, GPS);
+        contentValues.put(col_4, "0" );
 
 
 

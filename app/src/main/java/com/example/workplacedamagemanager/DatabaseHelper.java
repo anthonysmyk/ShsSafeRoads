@@ -17,12 +17,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String col_1 = "ID";
     public static final String col_2 = "NAME";
     public static final String col_3 = "DESCRIPTION";
-    public static final String col_4 = "DATEM";
-    public static final String col_5 = "DATED";
-    public static final String col_6 = "DATEY";
+    public static final String col_4 = "DATEM"; // really the coordinates
+    public static final String col_5 = "DATED"; // really the global id
+    public static final String col_6 = "DATEY"; // status
     public static final String col_7 = "SEVERITY";
     private static final String TAG = "Message:";
-     public static final String col_8 = "IMAGE";
+    public static final String col_8 = "IMAGE";
 
 
 
@@ -33,7 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-    db.execSQL("create table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, DESCRIPTION TEXT, DATEM TEXT, DATED TEXT, DATEY TEXT, SEVERITY TEXT, IMAGE BLOB)");
+    db.execSQL("create table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, DESCRIPTION TEXT, DATEM TEXT, DATED TEXT, DATEY TEXT, SEVERITY TEXT, IMAGE BLOB, SUBMITTED BOOLEAN)");
     }
 
     @Override
@@ -58,6 +58,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return(result != -1);
 
     }
+
+
     public Cursor getItemID(String name){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME +
