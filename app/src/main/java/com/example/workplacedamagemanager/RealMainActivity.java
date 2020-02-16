@@ -18,7 +18,6 @@ import java.util.Date;
 
 public class RealMainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener{
     public static Date lastDate = parseDate("2019-9-11");
-
     public static Boolean toggle = false;
     Switch switch1;
     Button togg;
@@ -27,6 +26,7 @@ public class RealMainActivity extends AppCompatActivity implements CompoundButto
     public boolean onCreateOptionsMenu(Menu menu) {
         //getActionBar().hide();
         setContentView(R.layout.main);
+        getSupportActionBar().hide();
         togg = (Button)findViewById(R.id.detect);
         if (toggle) {
             togg.setBackgroundResource(R.drawable.ic_power_button1);

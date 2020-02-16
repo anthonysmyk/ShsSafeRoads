@@ -41,6 +41,7 @@ public static final int PICK_IMAGE = 1;
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.record);
+        getSupportActionBar().hide();
 
         add = findViewById(R.id.button);
         editDateM = (EditText)findViewById(R.id.editText_dM);
@@ -185,7 +186,7 @@ public static final int PICK_IMAGE = 1;
 
     public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 35, outputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 25, outputStream);
         return outputStream.toByteArray();
     }
 

@@ -49,8 +49,8 @@
         android:layout_marginLeft="28dp"
         android:layout_marginBottom="68dp"
         android:ems="10"
-        android:gravity="center"
         android:hint="Description"
+        android:gravity="bottom|center_horizontal"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="367dp" />

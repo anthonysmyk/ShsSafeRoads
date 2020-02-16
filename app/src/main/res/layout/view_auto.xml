@@ -3,33 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-    <Button
-        android:id="@+id/btnDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="29dp"
-        android:layout_marginLeft="29dp"
-        android:layout_marginBottom="4dp"
-        android:text="Delete"
-        tools:layout_editor_absoluteX="182dp" />
-
-    <Button
-        android:id="@+id/btnSend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="Send to Congress" />
+    android:layout_height="match_parent"
+    android:background="@drawable/autoback">
 
     <TextView
         android:id="@+id/textDate"
@@ -40,30 +15,14 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
-        android:layout_marginStart="74dp"
-        android:layout_marginTop="71dp"
-        android:textSize="17sp"
-        android:layout_marginEnd="-6dp"
+        android:layout_marginStart="70dp"
+        android:layout_centerHorizontal="true"
+
+        android:layout_marginTop="200dp"
+        android:textSize="25sp"
+        android:layout_marginEnd="70dp"
         android:gravity="center"
         android:text="Date" />
-
-    <TextView
-        android:id="@+id/labelGPS"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textGPS"
-        android:layout_alignStart="@+id/labelDate"
-        android:layout_alignEnd="@+id/labelDate"
-        android:layout_alignParentStart="true"
-        android:layout_centerInParent="true"
-        android:textStyle="bold"
-        android:layout_marginStart="78dp"
-        android:layout_marginTop="-155dp"
-        android:layout_marginEnd="5dp"
-        android:gravity="center"
-        android:textSize="20sp"
-
-        android:text="Gps Coordinates:" />
 
     <TextView
         android:id="@+id/textGPS"
@@ -74,9 +33,10 @@
         android:layout_alignEnd="@+id/labelDate"
         android:layout_alignParentStart="true"
         android:layout_centerInParent="true"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="122dp"
-        android:layout_marginEnd="0dp"
+        android:layout_marginStart="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="125dp"
+        android:layout_marginEnd="60dp"
         android:gravity="center"
         android:textSize="24sp"
 
@@ -84,6 +44,20 @@
 
         android:text="GPS" />
 
+    <TextView
+        android:id="@+id/labelDate"
+        android:layout_width="225dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textDate"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="230dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textStyle="bold" />
     <TextView
         android:id="@+id/textLink"
         android:layout_width="wrap_content"
@@ -93,45 +67,37 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="83dp"
-        android:layout_marginTop="365dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:textSize="25sp"
+        android:layout_marginTop="500dp"
         android:autoLink="web"
         android:gravity="center"
-
+        android:textColor="@android:color/black"
         android:text="Google maps Link" />
-
-    <TextView
-        android:id="@+id/labelDate"
-        android:layout_width="225dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textDate"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="68dp"
-        android:gravity="center"
-        android:textSize="20sp"
-
-        android:text="Datestamp recorded:"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/labelLink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textGPS"
-        android:layout_alignStart="@+id/labelDate"
-        android:layout_alignEnd="@+id/labelDate"
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
         android:layout_alignParentStart="true"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="83dp"
-        android:textStyle="bold"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="0dp"
-        android:gravity="center"
-        android:textSize="20sp"
-
-        android:text="Google Maps link:" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/del"
+        tools:layout_editor_absoluteX="182dp" />
+    <Button
+        android:id="@+id/btnSend"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginRight="33dp"
+        android:background = "@drawable/send"
+        android:layout_marginBottom="15dp" />
 
 </RelativeLayout>
