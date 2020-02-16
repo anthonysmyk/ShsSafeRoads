@@ -25,6 +25,7 @@ public class RealMainActivity extends AppCompatActivity implements CompoundButto
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //getActionBar().hide();
         setContentView(R.layout.main);
         togg = (Button)findViewById(R.id.detect);
         if (toggle) {
