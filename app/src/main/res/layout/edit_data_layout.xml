@@ -4,158 +4,109 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/manualback">
-    <EditText
-        android:id="@+id/editable_item"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="60dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="130dp"
-        android:ems="10"
-        android:gravity="center"
-        android:inputType="textPersonName"
-        android:hint="Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.585"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="26dp" />
-    <EditText
-        android:id="@+id/editable_item2"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="205dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="130dp"
-        android:ems="10"
-        android:hint="NOT SENT"
-        android:inputType="none"
-        android:gravity = "center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.585"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="26dp" />
-    <EditText
-        android:id="@+id/editText_d"
-        android:layout_width="348dp"
-        android:layout_height="232dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginBottom="68dp"
-        android:ems="10"
-        android:hint="Description"
-        android:gravity="bottom|center_horizontal"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="367dp" />
-
-
-    <EditText
-        android:id="@+id/editText_dM"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="60dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="450dp"
-        android:ems="10"
-        android:enabled="false"
-        android:inputType="none"
-        android:gravity="center"
-        android:text="Date"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="81dp" />
-
-
-    <EditText
-        android:id="@+id/editText_s"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="195dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="450dp"
-        android:ems="10"
-        android:inputType="none"
-        android:gravity="center"
-        android:text="Coordinates"
-        android:enabled="false"
-        tools:layout_editor_absoluteX="205dp"
-        tools:layout_editor_absoluteY="80dp" />
-
-
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="140dp"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="125dp"
-        android:layout_marginLeft="159dp"
-        android:layout_marginTop="500dp"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="182dp"
-        android:background = "@drawable/bigsave"/>
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="125dp"
-        android:layout_marginLeft="303dp"
-        android:layout_marginTop="365dp"
-        android:background="@drawable/addimage"/>
-
+    android:background="@drawable/back">
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="206dp"
-        android:layout_marginEnd="120dp"
-        android:layout_marginRight="100dp"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_65sdp"
         android:adjustViewBounds="true"
-        app:srcCompat="@drawable/defaultimage" />
+        android:background="@drawable/carzz" />
+
+    <ImageView
+        android:id="@+id/dtime"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:background="@drawable/ic_editdr"
+        android:ems="10"
+        android:gravity="center"
+        android:hint=""
+        android:inputType="textPersonName" />
+
+    <ImageView
+        android:layout_width="@dimen/_222sdp"
+        android:layout_height="@dimen/_270sdp"
+        android:layout_marginTop="@dimen/_140sdp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/ic_form1" />
+
+    <EditText
+        android:id="@+id/editText_d"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_178sdp"
+        android:background="@null"
+        android:ems="10"
+        android:gravity="center"
+        android:hint=""
+        android:inputType="textPersonName" />
+
+    <Spinner
+        android:id="@+id/password"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_241sdp"
+        android:background="@null"
+        android:ems="10"
+        android:gravity="center"
+        android:hint=""
+        android:inputType="textPersonName" />
+    <EditText
+        android:id="@+id/editable_item2"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_300sdp"
+        android:background="@null"
+        android:ems="10"
+        android:gravity="center"
+        android:hint=""
+        android:inputType="textPersonName" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_360sdp"
+        android:background="@null"
+        android:ems="10"
+        android:gravity="center"
+        android:hint=""
+        android:inputType="textPersonName" />
+
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_48sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_415sdp"
+        android:background="@drawable/ic_submit"
+        android:onClick="login" />
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_48sdp"
+        android:layout_marginStart="@dimen/_205sdp"
+        android:layout_marginTop="@dimen/_415sdp"
+        android:background="@drawable/ic_save"
+        android:onClick="login" />
     <Button
         android:id="@+id/btnDelete"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="29dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/del"
-        tools:layout_editor_absoluteX="182dp" />
-    <Button
-        android:id="@+id/btnSend"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginRight="33dp"
-        android:background = "@drawable/send"
-        android:layout_marginBottom="15dp" />
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_48sdp"
+        android:layout_marginStart="@dimen/_105sdp"
+        android:layout_marginTop="@dimen/_415sdp"
+        android:background="@drawable/ic_delete"
+        android:onClick="login" />
+
+
 
 
 </RelativeLayout>

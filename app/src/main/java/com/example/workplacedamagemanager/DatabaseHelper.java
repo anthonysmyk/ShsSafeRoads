@@ -15,25 +15,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Damage.db";
     public static final String TABLE_NAME = "damage_table";
     public static final String col_1 = "ID";
-    public static final String col_2 = "NAME";
-    public static final String col_3 = "DESCRIPTION";
-    public static final String col_4 = "DATEM"; // really the coordinates
+    public static final String col_2 = "NAME"; //actually hours
+    public static final String col_3 = "DESCRIPTION"; //actually time
+    public static final String col_4 = "DATEM"; //date
     public static final String col_5 = "DATED"; // really the global id
     public static final String col_6 = "DATEY"; // status
-    public static final String col_7 = "SEVERITY";
     private static final String TAG = "Message:";
-    public static final String col_8 = "IMAGE";
+    public static final String col_8 = "USERNAME";
+
+    public static final String col_9 = "ROAD";
+
 
 
 
     public DatabaseHelper( Context context) {
-        super(context, DATABASE_NAME,null,5);
+        super(context, DATABASE_NAME,null,7);
         SQLiteDatabase db = this.getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-    db.execSQL("create table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, DESCRIPTION TEXT, DATEM TEXT, DATED TEXT, DATEY TEXT, SEVERITY TEXT, IMAGE BLOB, SUBMITTED BOOLEAN)");
+    db.execSQL("create table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, DESCRIPTION TEXT, DATEM TEXT, DATED TEXT, DATEY TEXT, USERNAME TEXT, SUBMITTED BOOLEAN, ROAD TEXT)");
     }
 
     @Override
@@ -41,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
          db.execSQL("DROP TABLE IF EXISTs " + TABLE_NAME);
         onCreate(db);
     }
-    public boolean insertData(String name, String description, String severity, String dateM, String dateD, String dateY, byte[] image)
+    public boolean insertData(String name, String description, String dateM, String dateD, String dateY, String username, String road)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -50,8 +52,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(col_4, dateM);
         contentValues.put(col_5, dateD);
         contentValues.put(col_6, dateY);
-        contentValues.put(col_7, severity);
-        contentValues.put(col_8, image);
+        contentValues.put(col_8, username);
+        contentValues.put(col_9, road);
 
 
         long result  = db.insert(TABLE_NAME,null, contentValues);
@@ -68,22 +70,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
-
-    public Cursor search(String name){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_NAME +
-                " WHERE " + col_2 + " = '" + name + "'";
-        Cursor data = db.rawQuery(query, null);
-        return data;
-    }
-
     /**
      * Updates the name field
      * @param newName
      * @param id
      * @param oldName
      */
-    public void updateName(String newName, int id, String oldName, String des, String dM,String dD,String dY, String s, byte[] i ){
+    public void updateName(String newName, int id, String oldName, String des, String dM,String dD,String dY, String road){
         SQLiteDatabase db = this.getWritableDatabase();
         try {
             ContentValues contentValues = new ContentValues();
@@ -93,8 +86,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             contentValues.put(col_4, dM);
             contentValues.put(col_5, dD);
             contentValues.put(col_6, dY);
-            contentValues.put(col_7, s);
-            contentValues.put(col_8, i);
+            contentValues.put(col_9, road);
+
             db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{Integer.toString(id)} );
         }
         catch(Exception e)

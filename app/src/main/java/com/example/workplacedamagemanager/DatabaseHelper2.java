@@ -17,7 +17,6 @@ public class DatabaseHelper2 extends SQLiteOpenHelper {
     private static final String TAG = "Message:";
 
 
-
     public DatabaseHelper2(Context context) {
         super(context, DATABASE_NAME,null,6);
         SQLiteDatabase db = this.getWritableDatabase();
@@ -41,8 +40,6 @@ public class DatabaseHelper2 extends SQLiteOpenHelper {
         contentValues.put(col_3, GPS);
         contentValues.put(col_4, "0" );
 
-
-
         long result  = db.insert(TABLE_NAME,null, contentValues);
         return(result != -1);
 
@@ -54,17 +51,6 @@ public class DatabaseHelper2 extends SQLiteOpenHelper {
         Cursor data = db.rawQuery(query, null);
         return data;
     }
-
-
-    public Cursor search(String name){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_NAME +
-                " WHERE " + col_2 + " = '" + name + "'";
-        Cursor data = db.rawQuery(query, null);
-        return data;
-    }
-
-
 
     /**
      * Delete from database

@@ -1,37 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/mainback"
+    android:background="@drawable/back"
     >
-
+    <ImageView
+        android:id="@+id/card"
+        android:layout_width="@dimen/_230sdp"
+        android:layout_height="@dimen/_215sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_165sdp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/buttons" />
     <Button
-        android:id="@+id/detect"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:background="@drawable/ic_power_button"
-        android:layout_marginLeft="120dp"
-        android:layout_marginTop="160dp"
+        android:id="@+id/swatch"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_125sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_centerHorizontal="true"
         android:onClick="toggle"
-        />
+        android:background="@drawable/stopwatch" />
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:textSize="30sp"
+        android:layout_marginTop="@dimen/_130sdp"
+        android:layout_centerHorizontal="true"
+        android:text="00:00:00"/>
+
 
     <Button
         android:id="@+id/item2"
-        android:layout_width="300dp"
-        android:layout_height="110dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft = "50dp"
-        android:onClick="filereport"
-        android:background="@drawable/reportbut" />
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_marginTop="@dimen/_180sdp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/ic_manlog"
+        android:onClick="filereport" />
 
     <Button
-        android:id="@+id/item4"
-        android:layout_width="300dp"
-        android:layout_height="110dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft = "50dp"
-        android:onClick="database"
-        android:background="@drawable/databasebut" />
-    />
+    android:id="@+id/item4"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_60sdp"
+    android:layout_marginTop="@dimen/_245sdp"
+    android:layout_centerHorizontal="true"
+    android:onClick="database"
+    android:background="@drawable/ic_pdrive" />
 
-</LinearLayout>
+    />
+    <Button
+        android:id="@+id/item5"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_marginTop="@dimen/_310sdp"
+        android:layout_centerHorizontal="true"
+        android:onClick="database"
+        android:background="@drawable/ic_dashboard" />
+
+    />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_380sdp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/carz" />
+</RelativeLayout>

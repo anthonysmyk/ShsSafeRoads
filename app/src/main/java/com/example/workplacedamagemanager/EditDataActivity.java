@@ -1,5 +1,6 @@
 package com.example.workplacedamagemanager;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,12 +16,18 @@ import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.ParcelFileDescriptor;
+import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.text.TextUtils;
 
@@ -38,7 +45,10 @@ import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import android.util.Base64;
 
@@ -46,39 +56,27 @@ import android.util.Base64;
  * Created by User on 2/28/2017.
  */
 
-public class EditDataActivity extends AppCompatActivity {
+public class EditDataActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private static final String TAG = "EditDataActivity";
 
-    private Button btnSave,btnDelete,btnImage,btnSend;
-    private EditText Ntxt, Dtxt, DMtxt, Stxt, Statustxt;
-    private ImageView Itxt;
+    private Button btnSave,btnDelete,btnSend;
+    private EditText Ntxt, Dtxt, DMtxt, Stxt;
 
    DatabaseHelper mDatabaseHelper;
 
 
-    EditText editName, editDescription, editSeverity,editDateM, editDateD, editDateY;
+    EditText editName, editDescription,editDateM, editDateD, editDateY, eText;
     Button add;
     private ListView mListView;
 
     private String selectedName;
     private int selectedID;
-    private String selectedDateM;
-    private String selectedSeverity;
-    private String selectedDescription;
-    private String selectedStatus;
-    private byte[] selectedImage;
+    private String selectedDateM,selectedDescription,selectedStatus,selectedRoad;
 
-    private boolean hasImage(@NonNull ImageView view) {
-        Drawable drawable = view.getDrawable();
-        boolean hasImage = (drawable != null);
+    DatePickerDialog picker;
+    Spinner spinner, spinnerTime;
 
-        if (hasImage && (drawable instanceof BitmapDrawable)) {
-            hasImage = ((BitmapDrawable)drawable).getBitmap() != null;
-        }
-
-        return hasImage;
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,17 +85,13 @@ public class EditDataActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         btnSave = (Button) findViewById(R.id.btnSave);
         btnDelete = (Button) findViewById(R.id.btnDelete);
-        btnImage = findViewById(R.id.button2);
-        btnSend = findViewById(R.id.btnSend);
-        Ntxt = (EditText) findViewById(R.id.editable_item);
-        Dtxt = (EditText) findViewById(R.id.editText_d);
-        Itxt = (ImageView) findViewById(R.id.imageView);
+        btnSend = findViewById(R.id.button);
+        Ntxt = (EditText) findViewById(R.id.editText_d);
+        spinner = (Spinner) findViewById(R.id.spinner);
+        spinnerTime = (Spinner) findViewById(R.id.password);
 
-        DMtxt = (EditText) findViewById(R.id.editText_dM);
-        Statustxt = (EditText) findViewById(R.id.editable_item2);
-
-
-        Stxt = (EditText) findViewById(R.id.editText_s);
+        DMtxt = (EditText) findViewById(R.id.editable_item2);
+       // Statustxt = (EditText) findViewById(R.id.editable_item2);
 
         mDatabaseHelper = new DatabaseHelper(this);
 
@@ -106,84 +100,64 @@ public class EditDataActivity extends AppCompatActivity {
 
         //now get the itemID we passed as an extra
         selectedID = receivedIntent.getIntExtra("id",-1); //NOTE: -1 is just the default value
-
         //now get the name we passed as an extra
         selectedName = receivedIntent.getStringExtra("name");
         selectedDescription = receivedIntent.getStringExtra("description");
         selectedDateM = receivedIntent.getStringExtra("datem");
-        selectedSeverity = receivedIntent.getStringExtra("severity");
         selectedStatus = receivedIntent.getStringExtra("datey");
-        selectedImage = receivedIntent.getByteArrayExtra("image");
+
+        selectedRoad = receivedIntent.getStringExtra("road");
+
         //set the text to show the current selected name
         Ntxt.setText(selectedName);
-        Stxt.setText((selectedSeverity));
         DMtxt.setText(selectedDateM);
-        Dtxt.setText(selectedDescription);
-        Statustxt.setText(selectedStatus);
-        Statustxt.setEnabled(false);
+        Log.d("shabbat",selectedRoad);
 
-        Bitmap bitmap = BitmapFactory.decodeByteArray(selectedImage,0,selectedImage.length);
-        bitmap = Bitmap.createScaledBitmap(bitmap, 400, 400, true);
-        Itxt.setImageBitmap(bitmap);
-        Itxt.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!TextUtils.isEmpty(Ntxt.getText())&& !TextUtils.isEmpty(Stxt.getText())&& !TextUtils.isEmpty(DMtxt.getText()) &&  !TextUtils.isEmpty(Dtxt.getText())&& hasImage(Itxt)){
-                    if (!(Stxt.getText().toString()).equals("No Metadata")) {
+                if(!TextUtils.isEmpty(Ntxt.getText()) && !TextUtils.isEmpty(DMtxt.getText()) ){
                     String name = Ntxt.getText().toString();
-            String description = Dtxt.getText().toString();
+                     String description = spinnerTime.getSelectedItem().toString() ;
+                     String road = spinner.getSelectedItem().toString() ;
 
-                String severity = (Stxt.getText().toString());
                 String dateM = DMtxt.getText().toString();
-                byte[] img = selectedImage;
               //  if(!name.equals("") && !description.equals("") && img != null && !Integer.toString(severity).equals("") && !Integer.toString(date).equals("")){
 
-                    mDatabaseHelper.updateName(name,selectedID,selectedName, description, dateM, "", "", severity,selectedImage);
+                    mDatabaseHelper.updateName(name,selectedID,selectedName, description, dateM, "", "",road);
                     Intent editScreenIntent = new Intent(view.getContext(), MainActivity.class);
                     startActivity(editScreenIntent);
-                }
-                else{
-                    toastMessage("Please use a picture with metadata or allow location priveliges");
-                }
+
                 }else{
                     toastMessage("You must fill all fields");
                 }
+
+
             }
         });
+
+
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mDatabaseHelper.deleteName(selectedID,selectedName);
                 Ntxt.setText("");
-                toastMessage("removed from database");
+                toastMessage("Removed from database");
                 Intent editScreenIntent = new Intent(view.getContext(), MainActivity.class);
                 startActivity(editScreenIntent);
             }
         });
 
-        btnImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
-            }
-        });
 
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(!TextUtils.isEmpty(Ntxt.getText())&& !TextUtils.isEmpty(Stxt.getText())&& !TextUtils.isEmpty(DMtxt.getText())&& !TextUtils.isEmpty(Dtxt.getText())&& hasImage(Itxt)){
-                    if (!(Stxt.getText().toString()).equals("No Metadata")) {
+                if(!TextUtils.isEmpty(Ntxt.getText()) && !TextUtils.isEmpty(DMtxt.getText())){
+
                         addItemToSheet();
-                    }
-                    else{
-                        toastMessage("Please use a picture with metadata or allow location priveliges");
-                    }
                 }else{
                     toastMessage("You must fill all fields");
                 }
@@ -191,30 +165,106 @@ public class EditDataActivity extends AppCompatActivity {
             }
         });
 
+        // Spinner click listener
+        spinner.setOnItemSelectedListener(this);
+
+        // Spinner Drop down elements
+        List<String> categories = new ArrayList<String>();
+        categories.add("Local Road");
+        categories.add("Major Road");
+        categories.add("Highway");
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
+
+
+        // Spinner click listener
+        spinnerTime.setOnItemSelectedListener(this);
+
+        // Spinner Drop down elements
+        List<String> categories2 = new ArrayList<String>();
+        categories2.add("Day");
+        categories2.add("Night");
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories2);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinnerTime.setAdapter(dataAdapter2);
+        if(selectedRoad.equals("Local Road") )
+            spinner.setSelection(0);
+        else if (selectedRoad.equals("Major Road"))
+            spinner.setSelection(1);
+        else
+            spinner.setSelection(2);
+        if (selectedDescription.equals("Day"))
+            spinnerTime.setSelection(0);
+        else
+            spinnerTime.setSelection(1);
+        eText = (EditText) findViewById(R.id.editText_d);
+        eText.setInputType(InputType.TYPE_NULL);
+        eText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int month = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+                // date picker dialog
+                picker = new DatePickerDialog(EditDataActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                eText.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                            }
+                        }, year, month, day);
+                picker.show();
+            }
+        });
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        if (position != 0) {
+            String item = parent.getItemAtPosition(position).toString();
+
+            // Showing selected spinner item
+        }
+    }
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
     }
     private void addItemToSheet() {
         Intent receivedIntent = getIntent();
         mDatabaseHelper = new DatabaseHelper(this);
         selectedID = receivedIntent.getIntExtra("id",-1); //NOTE: -1 is just the default value
-
         //now get the name we passed as an extra
         selectedName = receivedIntent.getStringExtra("name");
         final ProgressDialog loading = ProgressDialog.show(this,"Adding Item","Please wait");
        final String name = Ntxt.getText().toString();
-        final String description = Dtxt.getText().toString();
-        final String severity = Stxt.getText().toString();
+         final String description = spinnerTime.getSelectedItem().toString() ;
+        final String road = spinner.getSelectedItem().toString() ;
+
         final String dateM = DMtxt.getText().toString();
-        selectedImage = receivedIntent.getByteArrayExtra("image");
-        final byte[] img = selectedImage;
-        final String encodedImage = Base64.encodeToString(img, Base64.DEFAULT);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbzX0lhVQBZnfQURdQllg2RMlFMuBt2DRjUCq3Gp7QmlXsIvM1Ho/exec",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbwPpZvWH3q8Mo_ML5832K9m6zn_E9X-JIhA0WjtZADQ4dp1HYk/exec",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
                         loading.dismiss();
                         Toast.makeText(EditDataActivity.this,"Success",Toast.LENGTH_LONG).show();
-                        mDatabaseHelper.updateName(name,selectedID,selectedName, description, dateM, response, "", severity,selectedImage);
+                        mDatabaseHelper.updateName(name,selectedID,selectedName, description, dateM, response, "",road);
                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                         startActivity(intent);
 
@@ -232,12 +282,13 @@ public class EditDataActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
 
                 //here we pass params
-                params.put("action","addItem");
-                params.put("name",name);
+                params.put("action","addhours");
                 params.put("description",description);
-                params.put("img",encodedImage);
-                params.put("coords",severity);
-                params.put("dates",dateM);
+                params.put("username", RealMainActivity.username);
+                params.put("dates", name);
+                params.put("hours",dateM);
+                params.put("road",road);
+
 
                 return params;
             }
@@ -254,72 +305,7 @@ public class EditDataActivity extends AppCompatActivity {
 
 
     }
-    void showExif(Uri photoUri){
-        if(photoUri != null){
 
-            ParcelFileDescriptor parcelFileDescriptor = null;
-
-            /*
-            How to convert the Uri to FileDescriptor, refer to the example in the document:
-            https://developer.android.com/guide/topics/providers/document-provider.html
-             */
-            try {
-                parcelFileDescriptor = getContentResolver().openFileDescriptor(photoUri, "r");
-                FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
-
-                /*
-                ExifInterface (FileDescriptor fileDescriptor) added in API level 24
-                 */
-                ExifInterface exifInterface = new ExifInterface(fileDescriptor);
-                String datetime = exifInterface.getAttribute(ExifInterface.TAG_DATETIME);
-                String latitude = exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
-                String longitude = exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
-                String longlat = "";
-                if (longitude == null || latitude == null){
-                    longitude = "";
-                    latitude = "";
-                    Stxt.setText("No Metadata");
-                    Stxt.setTextColor(Color.RED);
-                }
-
-                else if (longitude != null && latitude != null) {
-                    int first = latitude.indexOf('/');
-                    int second = latitude.indexOf('/', first + 1);
-                    int third = latitude.indexOf('/', second + 1);
-                    latitude = "" + (Double.valueOf(latitude.substring(0, first)) + Double.valueOf(latitude.substring(first + 3, second)) / 60 + Double.valueOf(latitude.substring(second + 3, third)) / (3600 * 100));
-                    first = longitude.indexOf('/');
-                    second = longitude.indexOf('/', first + 1);
-                    third = longitude.indexOf('/', second + 1);
-                    longitude = "" + -1 * (Double.valueOf(longitude.substring(0, first)) + Double.valueOf(longitude.substring(first + 3, second)) / 60 + Double.valueOf(longitude.substring(second + 3, third)) / (3600 * 100));
-                    longlat = Math.round(Double.valueOf(latitude) * 1000000) / 1000000.0 + ", " + Math.round(Double.valueOf(longitude) * 1000000) / 1000000.0;
-                    //Log.d("IGAOO",exif);
-                    Stxt.setText(longlat);
-                    Stxt.setTextColor(Color.BLACK);
-                    longitude = "";
-                    latitude = "";
-                }
-
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(),
-                        "Something wrong:\n" + e.toString(),
-                        Toast.LENGTH_LONG).show();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(getApplicationContext(),
-                        "Something wrong:\n" + e.toString(),
-                        Toast.LENGTH_LONG).show();
-            }
-
-            String strPhotoPath = photoUri.getPath();
-
-        }else{
-            Toast.makeText(getApplicationContext(),
-                    "photoUri == null",
-                    Toast.LENGTH_LONG).show();
-        }
-    };
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
@@ -327,7 +313,6 @@ public class EditDataActivity extends AppCompatActivity {
 //TODO: action
             Uri uri = data.getData();
             InputStream inputStream = null;
-            showExif(uri);
             try {
 
                 inputStream = getContentResolver().openInputStream(uri);
@@ -338,26 +323,9 @@ public class EditDataActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            Bitmap bitmap;
-            bitmap = BitmapFactory.decodeStream(inputStream);
-            selectedImage = getBitmapAsByteArray(bitmap);
-
-            ImageView Itxt = (ImageView) findViewById(R.id.imageView);
-            /*boolean supported = inputStream.markSupported();
-            if(supported){
-            inputStream.reset();
-            }*/
-            bitmap = BitmapFactory.decodeByteArray(selectedImage,0,selectedImage.length);
-            Itxt.setImageBitmap(bitmap);
 
 
         }
-    }
-
-    public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 25, outputStream);
-        return outputStream.toByteArray();
     }
 
     /**

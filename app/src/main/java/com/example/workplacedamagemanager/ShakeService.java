@@ -102,14 +102,12 @@ public class ShakeService extends Service implements SensorEventListener  {
             long diffInMs = date.getTime() - RealMainActivity.lastDate.getTime();
             long diffInSec = TimeUnit.MILLISECONDS.toSeconds(diffInMs);
             client = LocationServices.getFusedLocationProviderClient(this);
-            if(diffInSec>2) {
-                RealMainActivity.lastDate = date;
-                if (gps != null) {
+            if(diffInSec>2)
+            {
+                RealMainActivity.lastDate=date;
+                if (gps != null){
                     Toast.makeText(this, "Recording Bump", Toast.LENGTH_SHORT).show();
-                    myDb.insertData(dateFormat.format(date), gps);}
-
-                }
-            }
+                myDb.insertData(dateFormat.format(date), gps);}}
 
             client.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
@@ -127,3 +125,5 @@ public class ShakeService extends Service implements SensorEventListener  {
     }
 
 
+
+}

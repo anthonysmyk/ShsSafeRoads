@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/car" />
+    <ImageView
+        android:id="@+id/dtime"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_120sdp"
+        android:ems="10"
+        android:gravity="center"
+        android:background="@drawable/ic_dtime"
+        android:hint=""
+        android:inputType="textPersonName" />
+
+    <ImageView
+        android:layout_width="@dimen/_254sdp"
+        android:layout_height="@dimen/_200sdp"
+        android:layout_marginTop="@dimen/_170sdp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/ic_form" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_217sdp"
+        android:background="@null"
+        android:ems="10"
+        android:gravity="center"
+        android:hint=""
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_296sdp"
+        android:background="@null"
+        android:ems="10"
+        android:gravity="center"
+        android:hint=""
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/item2"
+        android:layout_width="@dimen/_140sdp"
+        android:layout_height="@dimen/_67sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/_80sdp"
+        android:layout_marginTop="@dimen/_380sdp"
+        android:background="@drawable/ic_button"
+        android:onClick="login" />
+
+</RelativeLayout>

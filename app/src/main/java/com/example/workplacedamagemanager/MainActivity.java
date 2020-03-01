@@ -3,14 +3,10 @@ package com.example.workplacedamagemanager;
 import android.content.Intent;
 import android.database.Cursor;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -50,15 +46,11 @@ public class MainActivity extends AppCompatActivity {
         myDb = new DatabaseHelper(this);
         myDb2 = new DatabaseHelper2(this);
 
-
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        search = (EditText) findViewById(R.id.editText);
 
 /*        LayoutInflater factory = getLayoutInflater();
          View  view = factory.inflate(R.layout.record, null);*/
         mListView = (ListView)findViewById(R.id.listView);
-        mListView2 = (ListView)findViewById(R.id.listView2);
 
         populateListView();
         ArrayList<Integer> ids = new ArrayList<Integer>();
@@ -71,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         final ArrayList<Integer> ides = ids;
-        Log.d("SHABBAT FREEDOM" , ids.toString());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbzX0lhVQBZnfQURdQllg2RMlFMuBt2DRjUCq3Gp7QmlXsIvM1Ho/exec",
 
@@ -79,23 +70,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         String[] idees = response.split(",");
-                        Log.d("response gotten","oof");
-                        Log.d("RIP CODE", ""+response);
-                        for(int i=0; i< ides.size(); i++) {
-                            Log.d("emp",""+data.moveToFirst());
-                            if (data.moveToFirst()) {
-                                if (data.getInt(4) == ides.get(i))
-                                    myDb.updateName(data.getString(1), data.getInt(0), data.getString(1), data.getString(2), data.getString(3), data.getString(4), idees[i], data.getString(6), data.getBlob(7));
-                                while (data.moveToNext()) {
-                                    //get the value from the database in column 1
-                                    //then add it to the ArrayList
-                                    Log.d("First", "move");
-                                    Log.d("data", "" + data.getInt(4));
-                                    if (data.getInt(4) == ides.get(i))
-                                        myDb.updateName(data.getString(1), data.getInt(0), data.getString(1), data.getString(2), data.getString(3), data.getString(4), idees[i], data.getString(6), data.getBlob(7));
-                                }
-                            }
-                        }
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -108,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                Log.d("sending",ides.toString());
                 //here we pass params
                 params.put("action","status");
                 params.put("ids", ides.toString());
@@ -125,42 +99,8 @@ public class MainActivity extends AppCompatActivity {
 
         queue.add(stringRequest);
 
-        refresh = (Button)findViewById(R.id.refresh);
-        se = (Button)findViewById(R.id.se);
-
-
-        refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                populateListView();
-            }
-        });
-
-        se.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Cursor data = myDb.getItemID(search.getText().toString());
-
-                populateListViewSearch(data);
-            }
-        });
-
     }
 
-    public void populateListViewSearch(Cursor data) {
-        Log.d("hi", "populateListView: Displaying data in the ListView.");
-        //get the data and append to a list
-        ArrayList<String> listData = new ArrayList<>();
-        while(data.moveToNext()){
-            //get the value from the database in column 1
-            //then add it to the ArrayList
-            listData.add(data.getString(1));
-        }
-        //create the list adapter and set the adapter
-        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
-        mListView.setAdapter(adapter);
-    }
     public void populateListView() {
         Log.d("hi", "populateListView: Displaying data in the ListView.");
 
@@ -170,25 +110,16 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<String> listData = new ArrayList<>();
 
-        ArrayList<String> listData2 = new ArrayList<>();
-
         while(data.moveToNext()){
             //get the value from the database in column 1
             //then add it to the ArrayList
             listData.add(data.getString(1));
         }
 
-        while(data2.moveToNext()){
-            //get the value from the database in column 1
-            //then add it to the ArrayList
-            listData2.add(data2.getString(1));
-        }
         //create the list adapter and set the adapter
-        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
-        ListAdapter adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData2);
+        ListAdapter adapter = new ArrayAdapter<>(this,  R.layout.mytextview, listData);
 
         mListView.setAdapter(adapter);
-        mListView2.setAdapter(adapter2);
 
         //set an onItemClickListener to the ListView
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -201,19 +132,15 @@ public class MainActivity extends AppCompatActivity {
                 String dateD = "";
                 String dateM= "";
                 String dateY= "";
-                String severity ="";
-                byte[] img=null;
+                String road="";
                 while(data.moveToNext()){
                     itemID = data.getInt(0);
-                     description= data.getString(2);
-                     dateM = data.getString(3);
+                    description= data.getString(2);
+                    dateM = data.getString(3);
                     dateD = data.getString(4);
 
                     dateY = data.getString(5);
-
-                    severity = data.getString(6);
-                    img = data.getBlob(7);
-
+                    road = data.getString(8);
 
                 }
                 if(itemID > -1){
@@ -225,40 +152,9 @@ public class MainActivity extends AppCompatActivity {
                     editScreenIntent.putExtra("datem",dateM);
                     editScreenIntent.putExtra("dated",dateD);
                     editScreenIntent.putExtra("datey",dateY);
+                    editScreenIntent.putExtra("road",road);
 
 
-                    editScreenIntent.putExtra("severity",severity);
-                    editScreenIntent.putExtra("image",img);
-
-
-                    startActivity(editScreenIntent);
-                }
-                else{
-                    Toast.makeText(MainActivity.this,"NO ID ASSOCIATED",Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        mListView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String date = adapterView.getItemAtPosition(i).toString();
-                Cursor data = myDb2.getItemID(date); //get the id associated with that name
-                int itemID = -1;
-                String GPS ="" ;
-                while(data.moveToNext()){
-                    itemID = data.getInt(0);
-                    GPS = data.getString(2);
-
-
-
-                }
-                if(itemID > -1){
-                    Intent editScreenIntent = new Intent(view.getContext(), ViewAutoDataActivity.class);
-                    editScreenIntent.putExtra("id",itemID);
-
-                    editScreenIntent.putExtra("date",date);
-
-                    editScreenIntent.putExtra("GPS",GPS);
 
 
                     startActivity(editScreenIntent);
@@ -272,10 +168,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
-
-
-
-
 }
+
